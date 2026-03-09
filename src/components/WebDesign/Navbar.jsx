@@ -29,12 +29,13 @@ export default function Navbar() {
         items-center
         justify-between
         text-white
+        z-[9999]
         "
       >
 
-        {/* HAMBURGER MENU (mobile) */}
+        {/* HAMBURGER MENU */}
         <button
-          onClick={() => setMobileMenu(!mobileMenu)}
+          onClick={() => setMobileMenu(true)}
           className="md:hidden text-2xl"
         >
           <Icon icon="mdi:menu" />
@@ -43,10 +44,7 @@ export default function Navbar() {
         {/* LOGO */}
         <Link
           to="/"
-          className="
-          absolute left-1/2 -translate-x-1/2
-          md:static md:translate-x-0
-          "
+          className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
         >
           <img
             src="/Budhis.png"
@@ -63,7 +61,7 @@ export default function Navbar() {
             to="/about"
             className="hidden md:block hover:text-[#FFD24A]"
           >
-            About Us
+            About
           </Link>
 
           <Link
@@ -83,6 +81,8 @@ export default function Navbar() {
             </button>
           ) : (
             <div className="relative">
+
+              {/* PROFILE BUTTON */}
               <button
                 onClick={() => setOpenMenu(!openMenu)}
                 className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/10"
@@ -95,69 +95,149 @@ export default function Navbar() {
                 <Icon icon="mdi:chevron-down" />
               </button>
 
+              {/* DESKTOP LOGOUT CARD */}
               {openMenu && (
-                <div className="absolute right-0 mt-2 w-40 bg-white text-black rounded-md shadow">
+                <div
+                  className="
+                  hidden md:block
+                  absolute
+                  right-0
+                  mt-3
+                  w-[260px]
+                  z-[9999]
+
+                  bg-white/10
+                  backdrop-blur-md
+                  border border-white/20
+
+                  rounded-xl
+                  shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+                  overflow-hidden
+                  "
+                >
+
+                  {/* PROFILE */}
+                  <div className="flex items-center gap-3 p-4">
+
+                    <img
+                      src="/LoginUserimg.jpg"
+                      className="w-12 h-12 rounded-full"
+                      alt="user"
+                    />
+
+                    <div>
+                      <p className="text-white font-medium">
+                        James Bon
+                      </p>
+
+                      <p className="text-white/70 text-sm">
+                        user234@gmail.com
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <div className="border-t border-white/20"></div>
+
+                  {/* LOGOUT */}
                   <button
                     onClick={() => {
                       dispatch(logout());
                       setOpenMenu(false);
                     }}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                    className="
+                    flex
+                    items-center
+                    gap-3
+                    w-full
+                    px-4
+                    py-3
+                    text-[#FF6A4A]
+                    hover:bg-white/10
+                    transition
+                    "
                   >
-                    Logout
+                    <Icon icon="mdi:logout" width={20} />
+                    Log out
                   </button>
+
                 </div>
               )}
+
             </div>
           )}
 
         </div>
       </nav>
 
-      {/* MOBILE MENU OVERLAY */}
-{mobileMenu && (
-  <div
-    className="
-    md:hidden
-    absolute
-    top-[60px]
-    left-0
-    w-full
-    backdrop-blur-md
-    bg-[#0B1F3A]/60
-    border-b border-white/20
-    z-40
-    "
-  >
-    <div className="flex flex-col text-white">
 
-      <Link
-        to="/about"
-        onClick={() => setMobileMenu(false)}
-        className="
-        px-6
-        py-4
-        hover:bg-white/10
-        "
-      >
-        About Us
-      </Link>
+      {/* MOBILE MENU DRAWER */}
+      {mobileMenu && (
+        <div className="fixed inset-0 z-[9999] flex md:hidden">
 
-      <Link
-        to="/contact"
-        onClick={() => setMobileMenu(false)}
-        className="
-        px-6
-        py-4
-        hover:bg-white/10
-        "
-      >
-        Contact Us
-      </Link>
+          <div className="w-[260px] h-full bg-[#6F6F6F] text-white p-5 flex flex-col gap-6">
 
-    </div>
-  </div>
-)}
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold">More</h2>
+
+              <button onClick={() => setMobileMenu(false)}>
+                <Icon icon="mdi:close" width={22} />
+              </button>
+            </div>
+
+            <div className="flex flex-col text-sm">
+
+              <Link
+                to="/about"
+                onClick={() => setMobileMenu(false)}
+                className="py-3 border-b border-white/30"
+              >
+                About Us
+              </Link>
+
+              <Link
+                to="/contact"
+                onClick={() => setMobileMenu(false)}
+                className="py-3 border-b border-white/30"
+              >
+                Contact Us
+              </Link>
+
+            </div>
+
+            <div className="flex flex-col gap-3">
+
+              <p className="text-sm">Follow Us:</p>
+
+              <div className="flex items-center gap-3">
+
+                {[
+                  { icon: "mdi:close", color: "text-white" },
+                  { icon: "mdi:instagram", color: "text-pink-400" },
+                  { icon: "mdi:facebook", color: "text-blue-400" },
+                ].map((item, index) => (
+                  <button
+                    key={index}
+                    className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
+                  >
+                    <Icon icon={item.icon} className={item.color} width={16} />
+                  </button>
+                ))}
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div
+            className="flex-1 bg-black/40"
+            onClick={() => setMobileMenu(false)}
+          />
+
+        </div>
+      )}
+
 
       {/* AUTH MODAL */}
       {openAuth && (

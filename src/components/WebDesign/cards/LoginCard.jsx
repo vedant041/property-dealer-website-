@@ -6,7 +6,6 @@ import { Icon } from "@iconify/react";
 import { login } from "../../../redux/authSlice";
 
 export default function LoginCard({ onSwitch, onClose }) {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,205 +20,161 @@ export default function LoginCard({ onSwitch, onClose }) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleLogin = () => {
-
     let valid = true;
 
     setEmailError("");
     setPasswordError("");
-
-    /* EMAIL VALIDATION */
 
     if (!emailRegex.test(email)) {
       setEmailError("Please enter a valid email address");
       valid = false;
     }
 
-    /* PASSWORD VALIDATION */
-
     if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters");
       valid = false;
     }
 
-    /* BOTH INVALID */
-
     if (!valid && !emailRegex.test(email) && password.length < 6) {
       setToast(true);
-
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
+      setTimeout(() => setToast(false), 3000);
     }
 
     if (!valid) return;
 
     dispatch(login({ email }));
-
     onClose?.();
     navigate("/with-login");
   };
 
   return (
     <>
-
-      {/* TOAST */}
       {toast && (
-        <div
-          className="
-          fixed
-          top-4 right-4
-          md:top-6 md:right-6
-          bg-red-500
-          text-white
-          px-4 py-2
-          md:px-5 md:py-3
-          rounded-lg
-          shadow-lg
-          z-50
-          text-xs md:text-sm
-          "
-        >
+        <div className="fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-[9999] text-xs">
           Email and Password are invalid
         </div>
       )}
 
-      <div
-        className="
-        w-full
-        max-w-[520px]
-        mx-auto
-        rounded-[10px]
-        bg-white/14
-        backdrop-blur-xl
-        px-5 py-6
-        md:p-[30px]
-        shadow-[0_20px_50px_rgba(0,0,0,0.15)]
-        flex
-        flex-col
-        text-white
-        relative
-        "
-      >
+      {/* Modal wrapper */}
+      <div className="fixed inset-0 flex items-center justify-center px-4 z-[9999]">
 
-        {/* CLOSE BUTTON */}
-
-        <button
-          onClick={onClose}
+        <div
           className="
-          absolute
-          top-3
-          right-3
-          md:top-4 md:right-4
-          text-white/70
-          hover:text-white
+          w-full
+          max-w-[380px]
+
+          min-h-[70vh] md:min-h-0
+
+          rounded-[9px]
+          bg-white/10
+          backdrop-blur-md
+          border border-white/20
+
+          p-4
+
+          flex
+          flex-col
+          justify-between
+
+          shadow-[0_10px_30px_rgba(0,0,0,0.25)]
+          text-white
+          relative
           "
         >
-          <Icon icon="mdi:close" width={22} />
-        </button>
+          {/* Close */}
+          <button
+            onClick={onClose}
+            className="absolute top-3 right-3 text-white/70 hover:text-white"
+          >
+            <Icon icon="mdi:close" width={20} />
+          </button>
 
-        {/* HEADER */}
+          {/* Top Section */}
+          <div className="flex flex-col gap-[10px]">
 
-        <div className="mb-3">
+            <div>
+              <h1 className="text-[20px] font-semibold">Login</h1>
+              <p className="text-sm text-white/70">Welcome Back</p>
+            </div>
 
-          <h1 className="text-xl md:text-[28px] font-bold">
-            Login
-          </h1>
+            {/* Email */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-white/70">
+                Your Email Id
+              </label>
 
-          <h3 className="text-sm md:text-[16px] text-white/80">
-            Welcome Back
-          </h3>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="example@email.com"
+                className="
+                h-[42px]
+                px-3
+                rounded-md
+                bg-white/15
+                border border-white/30
+                text-sm
+                outline-none
+                "
+              />
 
-        </div>
+              {emailError && (
+                <p className="text-red-400 text-xs">{emailError}</p>
+              )}
+            </div>
 
-        {/* EMAIL */}
+            {/* Password */}
+            <div className="flex flex-col gap-1 relative">
+              <label className="text-xs text-white/70">
+                Password
+              </label>
 
-        <div className="flex flex-col gap-2 mb-3">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="
+                h-[42px]
+                px-3
+                pr-10
+                rounded-md
+                bg-white/15
+                border border-white/30
+                text-sm
+                outline-none
+                "
+              />
 
-          <label className="text-xs md:text-sm text-white/70">
-            Your Email Id
-          </label>
+              <Icon
+                icon={showPassword ? "mdi:eye-outline" : "mdi:eye-off-outline"}
+                className="
+                absolute
+                right-3
+                top-[30px]
+                text-white/70
+                cursor-pointer
+                "
+                width={18}
+                onClick={() => setShowPassword(!showPassword)}
+              />
 
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="example@email.com"
-            className="
-            h-[42px]
-            md:h-[44px]
-            px-4
-            rounded-lg
-            bg-white/15
-            border border-white/30
-            text-sm
-            text-white
-            outline-none
-            "
-          />
+              {passwordError && (
+                <p className="text-red-400 text-xs">
+                  {passwordError}
+                </p>
+              )}
+            </div>
 
-          {emailError && (
-            <p className="text-red-400 text-xs">
-              {emailError}
-            </p>
-          )}
+            <Button variant="auth" onClick={handleLogin}>
+              Continue
+            </Button>
 
-        </div>
+          </div>
 
-        {/* PASSWORD */}
-
-        <div className="flex flex-col gap-2 relative mb-4">
-
-          <label className="text-xs md:text-sm text-white/70">
-            Password
-          </label>
-
-          <input
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-            className="
-            h-[42px]
-            md:h-[44px]
-            px-4
-            pr-10
-            rounded-lg
-            bg-white/15
-            border border-white/30
-            text-sm
-            text-white
-            outline-none
-            "
-          />
-
-          <Icon
-            icon={showPassword ? "mdi:eye-outline" : "mdi:eye-off-outline"}
-            className="
-            absolute
-            right-3
-            md:right-4
-            top-[34px]
-            md:top-[38px]
-            text-white/70
-            cursor-pointer
-            "
-            width={20}
-            onClick={() => setShowPassword(!showPassword)}
-          />
-
-          {passwordError && (
-            <p className="text-red-400 text-xs">
-              {passwordError}
-            </p>
-          )}
 
         </div>
-
-        {/* BUTTON */}
-
-        <Button variant="auth" onClick={handleLogin}>
-          Continue
-        </Button>
 
       </div>
     </>
