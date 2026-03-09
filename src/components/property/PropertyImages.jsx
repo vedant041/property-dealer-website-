@@ -11,7 +11,7 @@ export default function PropertyImages() {
       className="
         w-full
         max-w-[590px]
-        h-[625px]
+        h-[550px]
         rounded-[15px]
         bg-[#1F3A5F]/10
         backdrop-blur-md

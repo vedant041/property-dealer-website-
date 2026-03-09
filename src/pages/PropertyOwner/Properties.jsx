@@ -1,39 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import PropertyCard from "../../components/PropertyOwner/cards/PropertyCard";
 import { propertyList } from "../../data/propertyList";
-
 import AddPropertyModal from "../../components/PropertyOwner/modals/AddPropertyModal";
 
 export default function Properties() {
-
-  /* ================= REDUX DATA ================= */
-  const properties = useSelector(
-    (state) => state.property.properties
-  );
-
+  const properties = useSelector((state) => state.property.properties);
   const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
   const [filter, setFilter] = useState("All");
 
-  /* ================= AFTER MODAL SUBMIT ================= */
-  // ⭐ FIXED (clean & correct)
   function handleAdd(data) {
     setShowModal(false);
 
-    // open form for ALL property types
     navigate("/add-property", {
       state: data,
     });
   }
 
-  /* ================= MERGE STATIC + REDUX ================= */
   const allProperties = [...propertyList, ...properties];
 
-  /* ================= FILTER LOGIC ================= */
   const filteredProperties =
     filter === "All"
       ? allProperties
@@ -41,27 +29,20 @@ export default function Properties() {
 
   return (
     <div className="flex flex-col gap-6">
-
-      {/* HEADER */}
       <div className="flex items-center justify-between">
-
         <div>
           <h1 className="text-xl font-semibold text-white">
             Property List
           </h1>
-
           <p className="text-white/60 text-sm">
             List of available properties
           </p>
         </div>
 
-        {/* RIGHT SIDE */}
         <div className="flex items-center gap-3">
-
-          {/* FILTER DROPDOWN */}
           <select
             value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={(event) => setFilter(event.target.value)}
             className="
               bg-white/10
               backdrop-blur-md
@@ -80,25 +61,20 @@ export default function Properties() {
             <option value="" disabled hidden>
               Property Type
             </option>
-
             <option value="All" className="bg-[#1B2B45] text-white">
               All
             </option>
-
             <option value="Residential" className="bg-[#1B2B45] text-white">
               Residential
             </option>
-
             <option value="Commercial" className="bg-[#1B2B45] text-white">
               Commercial
             </option>
-
             <option value="Industrial" className="bg-[#1B2B45] text-white">
               Industrial
             </option>
           </select>
 
-          {/* ADD PROPERTY BUTTON */}
           <button
             onClick={() => setShowModal(true)}
             className="
@@ -113,13 +89,10 @@ export default function Properties() {
           >
             Add Property
           </button>
-
         </div>
       </div>
 
-      {/* PROPERTY LIST */}
       <div className="flex flex-col gap-4">
-
         {filteredProperties.length > 0 ? (
           filteredProperties.map((item, index) => (
             <PropertyCard
@@ -132,17 +105,14 @@ export default function Properties() {
             No properties found
           </p>
         )}
-
       </div>
 
-      {/* ADD PROPERTY MODAL */}
       {showModal && (
         <AddPropertyModal
           onClose={() => setShowModal(false)}
           onSubmit={handleAdd}
         />
       )}
-
     </div>
   );
 }

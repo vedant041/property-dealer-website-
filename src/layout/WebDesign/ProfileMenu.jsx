@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/authSlice";
 import { Icon } from "@iconify/react";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 export default function ProfileMenu() {
   const [open, setOpen] = useState(false);
@@ -11,16 +12,7 @@ export default function ProfileMenu() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 🔹 Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useOutsideClick(menuRef, () => setOpen(false));
 
   const handleLogout = () => {
     dispatch(logout());
@@ -29,7 +21,6 @@ export default function ProfileMenu() {
 
   return (
     <div className="relative" ref={menuRef}>
-      {/* PROFILE BUTTON */}
       <button
         onClick={() => setOpen(!open)}
         className="

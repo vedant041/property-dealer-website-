@@ -1,16 +1,19 @@
 import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
     <footer
       className="
-        w-full
-        h-[72px]
-        flex
-        items-center
-        justify-center
-        relative
-        backdrop-blur-[4px]
+      w-full
+      h-[45px]
+      flex
+      items-center
+      justify-center
+      relative
+      backdrop-blur-[4px]
+      px-4
+      py-4
       "
       style={{
         background: "rgba(41,53,77,0.12)",
@@ -26,20 +29,44 @@ export default function Footer() {
       />
 
       {/* INNER CONTAINER */}
-      <div className="w-[1440px] px-8 flex items-center justify-between">
-        
+      <div
+        className="
+        w-full
+        max-w-[1440px]
+        flex
+        flex-col
+        md:flex-row
+        items-center
+        justify-between
+        gap-4
+        "
+      >
         {/* LEFT – LOGO */}
-        <div className="flex items-center">
-          <div className="bg-[#E0E0E080] text-[#FAE699] px-6 py-2 w-100px p-45px text-sm">
-            Logo
-          </div>
-        </div>
+        <Link to="/" className="flex items-center">
+          <img
+            src="/Budhis.png"
+            alt="Budhis Logo"
+            className="
+            h-7
+            md:h-8
+            object-contain
+            cursor-pointer
+            "
+          />
+        </Link>
 
-        {/* CENTER – COPYRIGHT */}
-        <p className="text-sm text-white/80">
-          © 2026 Accelgrowthtechnology. All rights reserved.
+        <p className="text-xs md:text-sm text-white/80 text-center">
+          © 2026{" "}
+          <a
+            href="https://accelgrowth.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#FFD24A] hover:underline"
+          >
+            Accelgrowth
+          </a>
+          . All rights reserved.
         </p>
-
         {/* RIGHT – SOCIAL ICONS */}
         <div className="flex items-center gap-3">
           {[
@@ -50,23 +77,24 @@ export default function Footer() {
             <button
               key={index}
               className="
-                w-9
-                h-9
-                rounded-full
-                bg-white/10
-                backdrop-blur-md
-                flex
-                items-center
-                justify-center
-                hover:bg-white/20
-                transition
+              w-8
+              h-8
+              md:w-9
+              md:h-9
+              rounded-full
+              bg-white/10
+              backdrop-blur-md
+              flex
+              items-center
+              justify-center
+              hover:bg-white/20
+              transition
               "
             >
-              <Icon icon={item.icon} className={item.color} width={18} />
+              <Icon icon={item.icon} className={item.color} width={16} />
             </button>
           ))}
         </div>
-
       </div>
     </footer>
   );

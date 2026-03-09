@@ -2,36 +2,65 @@ import { useDispatch, useSelector } from "react-redux";
 import { increment, decrement } from "../../../redux/shareSlice";
 
 export default function ShareCounter() {
-  const { count, pricePerShare } = useSelector(s => s.shares);
+
+  const { count } = useSelector((s) => s.shares);
   const dispatch = useDispatch();
 
   return (
-    <div className="flex items-end gap-10">
+    <div className="flex items-center">
 
-      {/* SHARES BLOCK */}
-      <div>
-        <div className="flex items-center h-[42px] bg-white/10 rounded-lg">
-          <button
-            onClick={() => dispatch(decrement())}
-            className="px-4 text-[18px] hover:text-[#2ED3C6] transition"
-          >
-            −
-          </button>
+      {/* COUNTER */}
+      <div
+        className="
+        flex
+        items-center
+        justify-between
+        w-[140px]
+        h-[42px]
+        bg-white/10
+        border border-white/10
+        rounded-lg
+        overflow-hidden
+        "
+      >
 
-          <span className="px-6 text-[16px] font-medium">
-            {count}
-          </span>
+        {/* DECREMENT */}
+        <button
+          onClick={() => dispatch(decrement())}
+          className="
+          w-[40px]
+          h-full
+          flex items-center justify-center
+          text-[18px]
+          hover:text-[#2ED3C6]
+          transition
+          "
+        >
+          −
+        </button>
 
-          <button
-            onClick={() => dispatch(increment())}
-            className="px-4 text-[18px] hover:text-[#2ED3C6] transition"
-          >
-            +
-          </button>
-        </div>
+        {/* COUNT */}
+        <span className="text-[16px] font-medium">
+          {count}
+        </span>
+
+        {/* INCREMENT */}
+        <button
+          onClick={() => dispatch(increment())}
+          className="
+          w-[40px]
+          h-full
+          flex items-center justify-center
+          text-[18px]
+          hover:text-[#2ED3C6]
+          transition
+          "
+        >
+          +
+        </button>
+
       </div>
 
-    
     </div>
   );
 }

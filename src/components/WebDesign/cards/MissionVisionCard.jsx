@@ -2,32 +2,33 @@ export default function MissionVisionCard() {
   return (
     <div
       className="
-        w-[360px]
-        h-[489px]
-        rounded-[15px]
-        border
-        border-white/30
-        backdrop-blur-[2px]
-        flex
-        flex-col
-        overflow-hidden
+      w-full
+      h-auto
+      md:h-[340px]
+      rounded-[18px]
+      border border-white/30
+      backdrop-blur-md
+      flex
+      flex-col
+      overflow-hidden
       "
-      style={{
-        background: "rgba(31,58,95,0.10)", // #1F3A5F @10%
-      }}
+      style={{ background: "rgba(31,58,95,0.12)" }}
     >
       {/* HEADER */}
-      <div className="p-4 border-b border-white/20">
-        <h2 className="text-lg font-semibold text-white">
+      <div className="px-4 md:px-5 py-1 border-b border-white/20">
+
+        <h2 className="text-[15px] md:text-[16px] font-semibold text-white">
           Our Mission & Vision
         </h2>
-        <p className="text-sm text-white/70 mt-1">
-          Shaping a transparent, tech-enabled future for property investment
+
+        <p className="text-[12px] md:text-[13px] text-white/70">
+          Shaping a transparent tech-enabled property ecosystem
         </p>
+
       </div>
 
       {/* IMAGE */}
-      <div className="h-[160px] w-full">
+      <div className="h-[100px] md:h-[120px] w-full">
         <img
           src="/earthimg.png"
           alt="Mission Vision"
@@ -36,30 +37,44 @@ export default function MissionVisionCard() {
       </div>
 
       {/* CONTENT */}
-      <div className="flex flex-col gap-4 p-4 text-sm text-white/85">
+      <div
+        className="
+        px-3 md:px-4
+        py-3
+        flex
+        flex-col
+        gap-2
+        text-[12px] md:text-[13px]
+        text-white/90
+        "
+      >
 
         {/* MISSION */}
         <div>
-          <h3 className="text-[#FFD24A] font-semibold mb-1">
+
+          <h3 className="text-[#FFD24A] font-semibold text-[13px] md:text-[14px] mb-1">
             Mission
           </h3>
-          <p className="leading-snug text-white/85">
-            Our mission is to make property ownership and investment
-            transparent, accessible, and future-ready by leveraging
-            technology, data, and trust.
+
+          <p className="leading-relaxed">
+            Make property investment transparent, accessible and
+            technology-driven through data, trust and innovation.
           </p>
+
         </div>
 
         {/* VISION */}
         <div>
-          <h3 className="text-[#FFD24A] font-semibold mb-1">
+
+          <h3 className="text-[#FFD24A] font-semibold text-[13px] md:text-[14px] mb-1">
             Vision
           </h3>
+
           <p className="leading-relaxed">
-            Our vision is to build a technology-driven property ecosystem
-            that connects investors, developers, and communities on a
-            single trusted platform.
+            Build a trusted platform connecting investors,
+            developers and communities into one ecosystem.
           </p>
+
         </div>
 
       </div>

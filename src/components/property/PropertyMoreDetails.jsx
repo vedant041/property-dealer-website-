@@ -1,4 +1,5 @@
 export default function PropertyMoreDetails() {
+
   const details = [
     { label: "Booking Amount", value: "₹ 1.60 Cr" },
     { label: "Price Breakup", value: "₹35 Lac" },
@@ -16,45 +17,53 @@ export default function PropertyMoreDetails() {
   return (
     <div
       className="
-        w-[1312px]
-        rounded-[15px]
-        border
-        border-white/30
-        backdrop-blur-[4px]
-        px-6
-        py-5
-        text-white
+      w-full
+      rounded-[15px]
+      border border-white/30
+      backdrop-blur-[4px]
+      px-4 sm:px-6
+      py-5
+      text-white
       "
       style={{ background: "rgba(31,58,95,0.10)" }}
     >
+
       {/* TITLE */}
-      <h2 className="text-lg font-semibold mb-4">More Details</h2>
+      <h2 className="text-base sm:text-lg font-semibold mb-4">
+        More Details
+      </h2>
 
       {/* DETAILS LIST */}
-      <div className="flex flex-col gap-[18px]">
+      <div className="flex flex-col gap-4 sm:gap-5">
+
         {details.map((item, index) => (
           <div
             key={index}
             className="
-              grid
-              grid-cols-[220px_1fr]
-              items-center
-              text-sm
-              leading-none
+            grid
+            grid-cols-1
+            sm:grid-cols-[200px_1fr]
+            gap-1
+            sm:gap-4
+            text-sm
             "
           >
+
             {/* LABEL */}
-            <span className="text-white/70 whitespace-nowrap">
+            <span className="text-white/70">
               {item.label}
             </span>
 
             {/* VALUE */}
-            <span className="text-white font-medium whitespace-nowrap">
+            <span className="text-white font-medium">
               {item.value}
             </span>
+
           </div>
         ))}
+
       </div>
+
     </div>
   );
 }

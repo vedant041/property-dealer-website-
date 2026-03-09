@@ -2,14 +2,16 @@ import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function ProtectedRoute({ children }) {
- /* const isAuthenticated = useSelector(
+
+  const isAuthenticated = useSelector(
     (state) => state.auth.isAuthenticated
   );
 
-  // dashboard app login route
+  // if not logged in → go to homepage
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
-  return children;*/
+  // if logged in → show protected page
+  return children;
 }

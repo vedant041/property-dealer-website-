@@ -1,4 +1,5 @@
 export default function PropertyDetails() {
+
   const details = [
     ["Total Price", "₹ 1.60 Cr"],
     ["Price Per Share", "₹12,200"],
@@ -25,37 +26,50 @@ export default function PropertyDetails() {
   return (
     <div
       className="
-        w-[700px]
-        rounded-[15px]
-        bg-[#1F3A5F]/10
-        backdrop-blur-sm
-        border border-white/30
-        p-[24px]
-        flex flex-col
-        gap-[14px]
-        text-white
+      w-full
+      rounded-[15px]
+      bg-[#1F3A5F]/10
+      backdrop-blur-sm
+      border border-white/30
+      p-4 sm:p-5 lg:p-6
+      flex flex-col
+      gap-4
+      text-white
       "
     >
+
       {/* TITLE */}
-      <h3 className="text-[16px] font-semibold leading-tight mb-2">
+      <h3 className="text-sm sm:text-base font-semibold mb-2">
         Property Details
       </h3>
 
-      {/* DETAILS LIST */}
-     <div className="grid grid-cols-[240px_1fr] gap-y-[18px] text-[14px]">
+      {/* DETAILS GRID */}
+      <div
+        className="
+        grid
+        grid-cols-1
+        sm:grid-cols-[200px_1fr]
+        gap-y-4
+        text-sm
+        "
+      >
 
-  {details.map(([label, value]) => (
-    <div key={label} className="contents">
-      <span className="text-white/80">
-        {label}
-      </span>
-      <span className="text-white">
-        {value}
-      </span>
-    </div>
-  ))}
+        {details.map(([label, value]) => (
+          <div key={label} className="contents">
 
-</div>
+            <span className="text-white/80">
+              {label}
+            </span>
+
+            <span className="text-white font-medium">
+              {value}
+            </span>
+
+          </div>
+        ))}
+
+      </div>
+
     </div>
   );
 }

@@ -1,36 +1,20 @@
-import { useState } from "react";
-
 import LoginCard from "../WebDesign/cards/LoginCard";
-import RegisterCard from "../WebDesign/cards/RegisterCard";
 
 export default function AuthModal({ onClose }) {
-  const [mode, setMode] = useState("login");
-
   return (
-    <div
-      className="
-        fixed inset-0 z-50
-        bg-black/40
-        flex items-center justify-center
-      "
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+
+      {/* Background overlay */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 bg-black/40"
         onClick={onClose}
       />
 
-      <div className="relative z-10 pointer-events-auto">
-        {mode === "login" ? (
-          <LoginCard
-            onSwitch={() => setMode("register")}
-            onClose={onClose}
-          />
-        ) : (
-          <RegisterCard
-            onSwitch={() => setMode("login")}
-          />
-        )}
+      {/* Modal container */}
+      <div className="relative z-10 w-full max-w-md">
+        <LoginCard onClose={onClose} />
       </div>
+
     </div>
   );
 }
