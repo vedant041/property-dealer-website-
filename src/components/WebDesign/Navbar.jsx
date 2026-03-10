@@ -11,8 +11,9 @@ export default function Navbar() {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const [openAuth, setOpenAuth] = useState(false);
-  const [openMenu, setOpenMenu] = useState(false);
+  const [desktopMenu, setDesktopMenu] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [mobileProfile, setMobileProfile] = useState(false);
 
   return (
     <>
@@ -33,7 +34,7 @@ export default function Navbar() {
         "
       >
 
-        {/* HAMBURGER MENU */}
+        {/* HAMBURGER */}
         <button
           onClick={() => setMobileMenu(true)}
           className="md:hidden text-2xl"
@@ -56,7 +57,6 @@ export default function Navbar() {
         {/* RIGHT SIDE */}
         <div className="flex items-center gap-6">
 
-          {/* DESKTOP LINKS */}
           <Link
             to="/about"
             className="hidden md:block hover:text-[#FFD24A]"
@@ -84,7 +84,13 @@ export default function Navbar() {
 
               {/* PROFILE BUTTON */}
               <button
-                onClick={() => setOpenMenu(!openMenu)}
+                onClick={() => {
+                  if (window.innerWidth < 768) {
+                    setMobileProfile(true);
+                  } else {
+                    setDesktopMenu(!desktopMenu);
+                  }
+                }}
                 className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/10"
               >
                 <img
@@ -95,29 +101,24 @@ export default function Navbar() {
                 <Icon icon="mdi:chevron-down" />
               </button>
 
-              {/* DESKTOP LOGOUT CARD */}
-              {openMenu && (
+              {/* DESKTOP DROPDOWN */}
+              {desktopMenu && (
                 <div
                   className="
                   hidden md:block
                   absolute
                   right-0
-                  mt-3
-                  w-[260px]
-                  z-[9999]
-
-                  bg-white/10
-                  backdrop-blur-md
-                  border border-white/20
-
-                  rounded-xl
-                  shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+                  top-[60px]
+                  w-[235px]
+                  bg-[#43557A]
+                  rounded-2xl
+                  shadow-[0_10px_40px_rgba(0,0,0,0.4)]
                   overflow-hidden
+                  z-[10000]
                   "
                 >
 
-                  {/* PROFILE */}
-                  <div className="flex items-center gap-3 p-4">
+                  <div className="flex items-center gap-4 p-5">
 
                     <img
                       src="/LoginUserimg.jpg"
@@ -126,7 +127,7 @@ export default function Navbar() {
                     />
 
                     <div>
-                      <p className="text-white font-medium">
+                      <p className="text-white text-lg font-semibold">
                         James Bon
                       </p>
 
@@ -137,27 +138,27 @@ export default function Navbar() {
 
                   </div>
 
-                  <div className="border-t border-white/20"></div>
+                  <div className="border-t border-white/30"></div>
 
-                  {/* LOGOUT */}
                   <button
                     onClick={() => {
                       dispatch(logout());
-                      setOpenMenu(false);
+                      setDesktopMenu(false);
                     }}
                     className="
                     flex
                     items-center
                     gap-3
                     w-full
-                    px-4
-                    py-3
+                    px-5
+                    py-4
                     text-[#FF6A4A]
+                    text-lg
                     hover:bg-white/10
                     transition
                     "
                   >
-                    <Icon icon="mdi:logout" width={20} />
+                    <Icon icon="mdi:logout" width={22} />
                     Log out
                   </button>
 
@@ -175,9 +176,11 @@ export default function Navbar() {
       {mobileMenu && (
         <div className="fixed inset-0 z-[9999] flex md:hidden">
 
-          <div className="w-[260px] h-full bg-[#6F6F6F] text-white p-5 flex flex-col gap-6">
+          {/* DRAWER */}
+          <div className="w-[260px] h-full bg-[#6F6F6F] text-white p-5 flex flex-col">
 
-            <div className="flex justify-between items-center">
+            {/* HEADER */}
+            <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold">More</h2>
 
               <button onClick={() => setMobileMenu(false)}>
@@ -185,6 +188,7 @@ export default function Navbar() {
               </button>
             </div>
 
+            {/* LINKS */}
             <div className="flex flex-col text-sm">
 
               <Link
@@ -205,7 +209,8 @@ export default function Navbar() {
 
             </div>
 
-            <div className="flex flex-col gap-3">
+            {/* FOLLOW US */}
+            <div className="mt-6 flex flex-col gap-3">
 
               <p className="text-sm">Follow Us:</p>
 
@@ -218,9 +223,19 @@ export default function Navbar() {
                 ].map((item, index) => (
                   <button
                     key={index}
-                    className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white/20 transition"
+                    className="
+                    w-9
+                    h-9
+                    rounded-full
+                    border border-white/30
+                    bg-white/10
+                    backdrop-blur-md
+                    flex
+                    items-center
+                    justify-center
+                    "
                   >
-                    <Icon icon={item.icon} className={item.color} width={16} />
+                    <Icon icon={item.icon} className={item.color} width={18} />
                   </button>
                 ))}
 
@@ -230,9 +245,65 @@ export default function Navbar() {
 
           </div>
 
+          {/* OVERLAY */}
           <div
             className="flex-1 bg-black/40"
             onClick={() => setMobileMenu(false)}
+          />
+
+        </div>
+      )}
+
+
+      {/* MOBILE PROFILE DRAWER */}
+      {mobileProfile && (
+        <div className="fixed inset-0 z-[10000] flex justify-end md:hidden">
+
+          <div className="w-[300px] h-full bg-[#6F6F6F] text-white p-6 flex flex-col">
+
+            <div className="flex justify-between items-center mb-6">
+
+              <div className="flex items-center gap-3">
+
+                <img
+                  src="/LoginUserimg.jpg"
+                  className="w-12 h-12 rounded-full"
+                  alt="user"
+                />
+
+                <div>
+                  <p className="font-medium">James Bon</p>
+                  <p className="text-xs text-white/70">
+                    user234@gmail.com
+                  </p>
+                </div>
+
+              </div>
+
+              <button onClick={() => setMobileProfile(false)}>
+                <Icon icon="mdi:close" width={22} />
+              </button>
+
+            </div>
+
+            <div className="border-b border-white/30 mb-6"></div>
+
+            <button
+              onClick={() => {
+                dispatch(logout());
+                setMobileProfile(false);
+              }}
+              className="flex items-center gap-3 text-[#FF6A4A] hover:text-red-300 transition"
+            >
+              <Icon icon="mdi:logout" width={20} />
+              Log out
+            </button>
+
+          </div>
+
+          <div
+            className="flex-1 bg-black/40"
+            onClick={() => setMobileProfile(false)}
           />
 
         </div>

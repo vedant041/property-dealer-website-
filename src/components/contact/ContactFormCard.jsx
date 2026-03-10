@@ -22,7 +22,7 @@ export default function ContactFormCard() {
         className="
         rounded-[14px]
         border border-white/20
-        bg-[#FFFFFF24]/25
+        bg-white/10
         backdrop-blur-[4px]
         p-4 sm:p-5 md:p-6
         "
